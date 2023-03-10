@@ -1,0 +1,56 @@
+---
+jupyter: python3
+---
+
+```{python}
+import qiskit.tools.jupyter
+%qiskit_version_table
+```
+
+```{python}
+from qiskit import IBMQ, QuantumCircuit, transpile
+from qiskit.tools import job_monitor
+from qiskit.visualization import plot_histogram, plot_gate_map
+```
+
+```{python}
+# Saving your IBM Quantum account in ~/.qiskit dir
+# May remove after first execution
+IBMQ.save_account('<Insert your unique API token>')
+# Loading your IBM Quantum account
+IBMQ.load_account()
+provider = IBMQ.get_provider(hub='ibm-q', group='open', project='main')
+backend = provider.get_backend('ibmq_lima')
+```
+
+```{python}
+# Hadamard gate visualization
+qc = QuantumCircuit(3)
+qc.h(0)
+qc.cx(0, 1)
+qc.measure_all()
+qc.draw(output='mpl')
+```
+
+```{python}
+import qiskit.tools.jupyter
+%qiskit_job_watcher 
+```
+
+```{python}
+# Run job on real hardware
+job = backend.run(transpile(qc, backend=backend), shots=1024)
+```
+
+```{python}
+# Retrieve previously-run job
+job = backend.retrieve_job("6409750d6d8b9d80b340e26e") # Job ID 1
+job2 = backend.retrieve_job("640a85c86d8b9d0fa240e553") # Job ID 2
+```
+
+```{python}
+import matplotlib.pyplot as plt
+plt.style.use('dark_background')
+plot_histogram(job2.result().get_counts())
+```
+
