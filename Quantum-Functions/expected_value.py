@@ -20,12 +20,16 @@ def statevector_output(gate_list):
         as indicies of all qubit combinations, the statevector's respective complex
         conjugate statevector, and the probability density vector of all qubit combinations.
     """
-    statevector = np.array([1, 0, 0, 0])
+    statevector_0 = np.array([1, 0])
+    statevector_1 = np.array([1, 0])
     conjugate_statevector = []
     qubit_probabilities = []
     for i, gate in enumerate(gate_list):
         gate_composition = gate_matrix(gate)
-        statevector = np.matmul(gate_composition, statevector)
+        if "0)" in gate:
+            statevector = np.matmul(gate_composition, statevector_0)
+        else:
+            statevector = np.matmul(gate_composition, statevector_1)
 
     for i in range(4):
         conjugate_value = np.conjugate(statevector[i])
@@ -60,20 +64,13 @@ def gate_matrix(gate):
 
     if ".h(" in gate:
         if "0" in gate:
-            return np.array(
-                [
-                    [2**-0.5, 2**-0.5, 0, 0],
-                    [-1 * 2**-0.5, 2**-0.5, 0, 0],
-                    [0, 0, 1, 0],
-                    [0, 0, 0, 1],
-                ]
-            )
+            return np.array([[2**-0.5, 2**-0.5], [1 * 2**-0.5, -1 * 2**-0.5]])
         return np.array(
             [
                 [1, 0, 0, 0],
                 [0, 1, 0, 0],
                 [0, 0, 2**-0.5, 2**-0.5],
-                [0, 0, -1 * 2**-0.5, 2**-0.5],
+                [0, 0, 2**-0.5, -1 * 2**-0.5],
             ]
         )
     elif ".x(" in gate:
@@ -306,3 +303,7 @@ def gate_matrix(gate):
         )
 
     return np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+
+
+probabilities, vector, conjugate = statevector_output(["gate.h(0)", "gate.h(1)"])
+print(probabilities)
