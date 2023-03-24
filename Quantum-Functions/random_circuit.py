@@ -3,38 +3,35 @@ A program that randomizes which logic gates
 quibits go into.
 """
 
-from random import choice, randrange
+from random import choice, randrange, uniform
+import numpy as np
 from qiskit import IBMQ, QuantumCircuit, transpile
 
-
-def firstinput(gate_one, _):
-    """
-    Return the first argument in a function
-    """
-    return gate_one
-
-
-def secondinput(_, gate_two):
-    """
-    Return the second argument in a function
-    """
-    return gate_two
-
-
-BASE_ARGUMENTS = [firstinput, secondinput]
-
 POTENTIAL_GATES = {
-    QuantumCircuit.h: 1,
-    QuantumCircuit.y: 1,
-    QuantumCircuit.x: 1,
-    QuantumCircuit.z: 1,
-    QuantumCircuit.p: 2,
-    QuantumCircuit.s: 1,
-    QuantumCircuit.t: 1,
+    1: QuantumCircuit.h,
+    2: QuantumCircuit.y,
+    3: QuantumCircuit.x,
+    4: QuantumCircuit.z,
+    5: QuantumCircuit.p,
+    6: QuantumCircuit.s,
+    7: QuantumCircuit.sdg,
+    8: QuantumCircuit.t,
+    9: QuantumCircuit.tdg,
+    10: QuantumCircuit.cx,
+    11: QuantumCircuit.swap,
+    12: QuantumCircuit.sx,
+    13: QuantumCircuit.sxdg,
+    14: QuantumCircuit.rx,
+    15: QuantumCircuit.ry,
+    16: QuantumCircuit.rz,
+    17: QuantumCircuit.rxx,
+    18: QuantumCircuit.ryy,
+    19: QuantumCircuit.rzz,
+    20: QuantumCircuit.u,
 }
 
 
-def random_circuit(depth_min, depth_max):
+def random_circuit(depth, gatelist):
     """
     Returns a randomly generated path of quantum gates that a quibit goes into
     based on previously defined functions from the "QuantumCircuit" file. These quantum gates
@@ -53,31 +50,30 @@ def random_circuit(depth_min, depth_max):
     T Gate: S = T^2
 
     Args:
-    depth_min: An int that represents the minimum amount of a gates a qubit should
+    depth: An int that represents the amount of a gates a qubit should
     be passed through.
-     depth_max: An int that represents the maximum amount of a gates a qubit should
-    be passed through.
+
 
     Returns:
 
-
-
     """
+    if depth == 0:
+        return gatelist
 
-    if depth_min < 1 or (depth_min < 1 and randrange(2) == 0):
-        return choice(BASE_ARGUMENTS)
+    gate = list(POTENTIAL_GATES.keys())
+    random_use = choice([0, 1])
+    theta = np.random.uniform(0, 2 * np.pi)
+    lam = np.random.uniform(0, 2 * np.pi)
+    phi = np.random.uniform(0, 2 * np.pi)
+    gate_select = randrange(len(POTENTIAL_GATES))
+    qubit_select = choice([0, 1])
 
-    gate = choice(list(POTENTIAL_GATES.keys()))
-    first_gate = random_circuit(depth_min - 1, depth_max - 1)
-    if POTENTIAL_GATES[gate] == 2:
-        second_gate = random_circuit(depth_min - 1, depth_max - 1)
+    gatelist.append(POTENTIAL_GATES[gate_select])
+    return random_circuit(depth - 1, gatelist)
 
-        def circuit(gate_one, gate_two):
-            return gate(first_gate(gate_one, gate_two), second_gate(gate_one, gate_two))
 
-    else:
+def evaluate_circuit(potential_gates)
 
-        def circuit(gate_one, gate_two):
-            return first_gate(gate_one, gate_two)
 
-    return circuit
+eval("circuit.h(0)")
+print(circuit)
