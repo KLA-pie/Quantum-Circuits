@@ -106,7 +106,6 @@ def gate_matrix(gate):
         transform_matrix = np.array([[0, 1], [1, 0]])
     elif ".y(" in gate:
         transform_matrix = np.array([[0, -1j], [1j, 0]])
-        return np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])
     elif ".z(" in gate:
         transform_matrix = np.array([[1, 0], [0, -1]])
     elif ".p(" in gate:
@@ -117,9 +116,9 @@ def gate_matrix(gate):
     elif ".sdg(" in gate:
         transform_matrix = np.array([[1, 0], [0, -1j]])
     elif ".t(" in gate:
-        transform_matrix = np.array([[1, 0], [0, 2**-0.5 + (2**-0.5)]])
+        transform_matrix = np.array([[1, 0], [0, 2**-0.5 + 1j * (2**-0.5)]])
     elif ".tdg(" in gate:
-        transform_matrix = np.array([[1, 0], [0, 2**-0.5 - (2**-0.5)]])
+        transform_matrix = np.array([[1, 0], [0, 2**-0.5 - 1j * (2**-0.5)]])
     elif ".sx(" in gate:
         transform_matrix = np.array(
             [[0.5 + 0.5j, 0.5 - 0.5j], [0.5 - 0.5j, 0.5 + 0.5j]]
@@ -158,9 +157,3 @@ def gate_matrix(gate):
     if "0)" in gate:
         return np.kron(iden_matrix, transform_matrix)
     return np.kron(transform_matrix, iden_matrix)
-
-
-a, b, c = statevector_output(["state.h(0)", "best.h(1)"])
-print(a[1])
-print(b)
-print(c)
