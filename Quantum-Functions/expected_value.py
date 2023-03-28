@@ -33,7 +33,7 @@ def statevector_output(gate_list):
 
     for i in range(4):
         qubit_probabilities.append(
-            np.multiply(statevector[i], conjugate_statevector[i])
+            np.real(np.multiply(statevector[i], conjugate_statevector[i]))
         )
 
     return qubit_probabilities, statevector, conjugate_statevector

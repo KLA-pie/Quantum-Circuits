@@ -96,22 +96,22 @@ MATRIX_COMPARISON = [
     (["test.rz(1.57079632679, 1)"], [1, 0, 0, 0], [0.707106 - 0.707106j, 0, 0, 0]),
     # Test the rxx gate by entangling the two qubit probabilities and then
     # rotating qubit 1 π/2 radians counterclockwise around the x axis
-    (["test.rxx(1.57079632679, 0)"], [0.5, 0, 0, 0.5], [0.707106, 0, 0, -0.707106j]),
+    (["test.rxx(1.57079632679, 0, 1)"], [0.5, 0, 0, 0.5], [0.707106, 0, 0, -0.707106j]),
     # Test the rxx gate by entangling the two qubit probabilities and then
     # rotating qubit 2 π/2 radians counterclockwise around the x axis
-    (["test.rxx(1.57079632679, 1)"], [0.5, 0, 0, 0.5], [0.707106, 0, 0, -0.707106j]),
+    (["test.rxx(1.57079632679, 1, 0)"], [0.5, 0, 0, 0.5], [0.707106, 0, 0, -0.707106j]),
     # Test the ryy gate by entangling the two qubit probabilities and then
     # rotating qubit 1 π/2 radians counterclockwise around the y axis
-    (["test.ryy(1.57079632679, 0)"], [0.5, 0, 0, 0.5], [0.707106, 0, 0, 0.707106j]),
+    (["test.ryy(1.57079632679, 0, 1)"], [0.5, 0, 0, 0.5], [0.707106, 0, 0, 0.707106j]),
     # Test the ryy gate by entangling the two qubit probabilities and then
     # rotating qubit 2 π/2 radians counterclockwise around the y axis
-    (["test.ryy(1.57079632679, 1)"], [0.5, 0, 0, 0.5], [0.707106, 0, 0, 0.707106j]),
+    (["test.ryy(1.57079632679, 1, 0)"], [0.5, 0, 0, 0.5], [0.707106, 0, 0, 0.707106j]),
     # Test the rzz gate by entangling the two qubit probabilities and then
     # rotating qubit 1 π/2 radians counterclockwise around the z axis
-    (["test.rzz(1.57079632679, 0)"], [1, 0, 0, 0], [0.707106 - 0.707106j, 0, 0, 0]),
+    (["test.rzz(1.57079632679, 0, 1)"], [1, 0, 0, 0], [0.707106 - 0.707106j, 0, 0, 0]),
     # Test the rzz gate by entangling the two qubit probabilities and then
     # rotating qubit 2 π/2 radians counterclockwise around the z axis
-    (["test.rzz(1.57079632679, 1)"], [1, 0, 0, 0], [0.707106 - 0.707106j, 0, 0, 0]),
+    (["test.rzz(1.57079632679, 1, 0)"], [1, 0, 0, 0], [0.707106 - 0.707106j, 0, 0, 0]),
     # Test the U gate by rotating qubit 1 by 3 Euler angles each set to π/2
     (
         ["test.u(1.57079632679, 1.57079632679, 1.57079632679, 0)"],
@@ -185,8 +185,8 @@ MATRIX_COMPARISON = [
     # Test that using two entanglement gates either output 00 or 11
     (
         [
-            "test.rxx(1.57079632679, 0)",
-            "test.rzz(1.57079632679, 0)",
+            "test.rxx(1.57079632679, 0, 1)",
+            "test.rzz(1.57079632679, 0, 1)",
         ],
         [0.5, 0, 0, 0.5],
         [0.5 - 0.5j, 0 + 0j, 0 + 0j, -0.5 - 0.5j],
@@ -194,9 +194,9 @@ MATRIX_COMPARISON = [
     # Test that using all entanglement gates outputs a 00 with a phase angle
     (
         [
-            "test.rxx(1.57079632679, 0)",
-            "test.rzz(1.57079632679, 0)",
-            "test.ryy(1.57079632679, 0)",
+            "test.rxx(1.57079632679, 0, 1)",
+            "test.rzz(1.57079632679, 0, 1)",
+            "test.ryy(1.57079632679, 0, 1)",
         ],
         [1, 0, 0, 0],
         [0.70710678 - 0.707106781j, 0, 0, 0],

@@ -4,9 +4,9 @@ and theoretical values for Qubit configurations
 """
 
 
-def chi_squared(theory_val, experimental_val, significance=0.05):
+def chi_squared(theory_val, experimental_val):
     """
-    Calculates the statistical significance between the theoretical
+    Calculates the Chi-Squared value between the theoretical
     values for qubits and the experimental/real value for qubits
 
     Args:
@@ -17,12 +17,8 @@ def chi_squared(theory_val, experimental_val, significance=0.05):
         the IBM qubit configuration (00, 01, 10, 11) is actually occured in our randomly
         defined circuit.
 
-        significance: A float between 0 and 1 (non-inclusive) that is meant to represent
-        the level of significance the Chi-squared test may exceed for the experimental and
-        theoretical data to be independent. The value is preset to 0.05
-
     Returns:
-        The Chi-squared value and whether or not the data is statistically significant
+        The Chi-squared value of the dataset
     """
     if len(theory_val) != len(experimental_val):
         return None, "List lengths must be the same"
@@ -37,6 +33,25 @@ def chi_squared(theory_val, experimental_val, significance=0.05):
             chi_value += (experimental_val[i] - theory_val[i]) ** 2 / theory_val[i]
         except ZeroDivisionError:
             chi_value += (experimental_val[i] - 0.00001) ** 2 / 0.00001
+    return chi_value
+
+
+def significance_statement(chi_value, significance=0.05):
+    """
+    Determines if the Chi squared value is statistically significant
+    with a specified level of significance.
+
+    Args:
+        chi_value: A float that represents the Chi squared value calculated between the
+        expected and observed values of qubit values.
+
+        significance: A float between 0 and 1 (non-inclusive) that is meant to represent
+        the level of significance the Chi-squared test may exceed for the experimental and
+        theoretical data to be independent. The value is preset to 0.05
+    Returns:
+        A string explaining whether or not the data is statistically
+        significant.
+    """
 
     # Define a list of known chi-squared values respective to significance
     # values of 3 degrees of freedom
