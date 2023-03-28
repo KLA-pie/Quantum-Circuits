@@ -5,9 +5,10 @@ angle values, Random qubit values, etc).
 """
 
 # Import statements(including qiskit methods)
-import numpy as np
 from random import choice, randrange
 from qiskit import QuantumCircuit, Aer, execute
+import numpy as np
+
 
 # Define the potential gates as a dictionary
 POTENTIAL_GATES = {
@@ -34,10 +35,10 @@ POTENTIAL_GATES = {
 }
 
 
-def random_circuit(depth, gatelist=[]):
+def random_circuit(depth, gatelist):
     """
     Returns a randomized list of quantum gates based on
-    a specified depth paramenter. This list represents
+    a specified depth parameter. This list represents
     a path of gates that a randomized qubit is passed through,
     which then effectively changes it's superposition. This
     randomized path can be used for a random circuit vizualization.
@@ -55,7 +56,7 @@ def random_circuit(depth, gatelist=[]):
 
     """
 
-    # Base Case if the specified depth asks for no quantum fucntions
+    # Base Case if the specified depth asks for no quantum functions
     if depth == 0:
         return gatelist
 
@@ -67,7 +68,7 @@ def random_circuit(depth, gatelist=[]):
     return random_circuit(depth - 1, gatelist)
 
 
-def evaluate_circuit(gatelist):
+def evaluate_circuit(random_gatelist):
     """
     Returns a list of quantum gates with inputted random values for
     different qubits and angles, a circuit with these random gates and randomized inputs,
@@ -78,12 +79,12 @@ def evaluate_circuit(gatelist):
         random_circuit function, but any list of quantum gates in the specified format
         .<GATE>( will work in the following function.
     Returns:
-        qubit_input_list: A list of strings of each random quantum gate, with randomly inputted values
-        for each gate represented within parentheses of each gate.
-        circuit: A qiskit object that represents the actual quantum circuit with the randomly inputted
-        values.
-        counts: A dictionary that maps each qubit instance (00,01,10,11) to the amount that each occurs
-        in the random circuit.
+        qubit_input_list: A list of strings of each random quantum gate, with randomly inputted
+        values for each gate represented within parentheses of each gate.
+        circuit: A qiskit object that represents the actual quantum circuit with the randomly
+        inputted values.
+        counts: A dictionary that maps each qubit instance (00,01,10,11) to the amount that
+        each occurs in the random circuit.
 
     """
     # Defined list to append each logic gate to
@@ -96,7 +97,7 @@ def evaluate_circuit(gatelist):
     phi = np.random.uniform(0, 2 * np.pi)
     qubit_select = choice([0, 1])
     # Iterate through each random gate in the inputted random Quantum gate list
-    for gate in gatelist:
+    for gate in random_gatelist:
         # Input parameters for X gate and append to qubit_input_list
         if gate == ".x(":
             circuit.x(qubit_select)
@@ -220,7 +221,3 @@ def evaluate_circuit(gatelist):
     counts = result.get_counts(circuit)
     # Return qubit_input_list, random qiskit circuit object, and counts
     return qubit_input_list, circuit, counts
-
-
-gatelist = random_circuit(3)
-print(evaluate_circuit(gatelist))
