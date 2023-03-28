@@ -1,20 +1,37 @@
 # Quantum-Circuits
-As classical computers face issues with computation, quantum computers have found its use in areas such as chemistry simulations and fast decryption. These quantum computers use qubits as opposed to normal bits in a classical computer which operate on a different basis through matrix representations in 3D space. However, due to the properties of quantum mechanics, sometimes the known state of these qubits are not always going to be exact after applying transformations to these qubits. Additionally, no quantum computer has implemented a form of accounting for these errors. This project analyzes how accurate these predicted states of 3 qubits compare to the measured state of 3 qubits when processed through a randomly generated quantum circuit arrangement.
+As classical computers face issues with computation, quantum computers have found its use in areas such as chemistry simulations and fast decryption. These quantum computers use qubits as opposed to normal bits in a classical computer which operate on a different basis through matrix representations in 3D space. However, due to the properties of quantum mechanics, sometimes the known state of these qubits are not always going to be exact after applying transformations to these qubits. Additionally, no quantum computer has implemented a form of accounting for these errors. This project analyzes how accurate these predicted states of 2 qubits compare to the measured state of 2 qubits when processed through a randomly generated quantum circuit arrangement.
 
 ## Required Software
 To run the software, you will need the following:
 * IBM Qiskit library
+* matplotlib
+* numpy
+* pylatexenc
+* ipywidgets
+* ipykernel
 * (Optional to run your own simulations) IBM API token
 
-### IBM Qiskit library installation
-To install the Qiskit library, do the following:
+### Library installation
+To install the all of the necessary libraries, we recommend doing the following:
 * Ensure that you're running a version of Python that is 3.7 or above
 * Open a terminal for a version of Linux installed on your machine
-* Once it loads, run the following command
+* Once it loads, we recommend creating a new Anaconda environment. This can be done by doing the following
 ```
-pip install qiskit
+conda create --name <Environment Name> python=3.9
 ```
-* Be patient and wait for library to finish installing
+Where you may name your environment whatever you would like
+* Be patient and make sure that you type y to create your environment after a dialog box appears
+* After the environment has been created, run the following command
+```
+conda activate <Environment Name>
+```
+To activate your Anaconda environment
+* You're now ready to install the libraries to use this repository. Ensure that your file directory is at the root of this repository. By typing `ls` in the repository directory, you should see a file called `requirements.txt`. Finally, you can run the following
+
+```
+pip install -r requirements.txt
+```
+* Be patient and wait for the libraries to finish installing
 
 ### IBM API token
 If you would like to get access to the quantum computers used in this project to run your own simulations, please do the following:
