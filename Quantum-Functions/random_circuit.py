@@ -68,6 +68,11 @@ def random_circuit(depth, gatelist=[]):
 
 
 def evaluate_circuit(gatelist):
+    """
+    Returns a list of quantum gates with inputted random values for
+    different qubits and angles, a circuit with each evaluated value,
+
+    """
     qubit_input_list = []
     circuit = QuantumCircuit(2)
     theta = np.random.uniform(0, 2 * np.pi)
@@ -175,9 +180,8 @@ def evaluate_circuit(gatelist):
     simulator = Aer.get_backend("qasm_simulator")
     result = execute(circuit, simulator, shots=1024).result()
     counts = result.get_counts(circuit)
-    return qubit_input_list
+    return qubit_input_list, circuit, counts
 
 
 gatelist = random_circuit(3)
 print(evaluate_circuit(gatelist))
-print(gatelist)
