@@ -33,7 +33,7 @@ def chi_squared(theory_val, experimental_val):
             chi_value += (experimental_val[i] - theory_val[i]) ** 2 / theory_val[i]
         except ZeroDivisionError:
             chi_value += (experimental_val[i] - 0.00001) ** 2 / 0.00001
-    return chi_value
+    return round(chi_value, 3)
 
 
 def significance_statement(chi_value, significance=0.05):
