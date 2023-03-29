@@ -20,17 +20,22 @@ def chi_squared(theory_val, experimental_val):
     Returns:
         The Chi-squared value of the dataset
     """
+    # Checks to see if the lists are the right length
     if len(theory_val) != len(experimental_val):
         return None, "List lengths must be the same"
 
+    # Checks to see if the sum of all elements are the same
     if abs(sum(theory_val) - sum(experimental_val)) > 0.001:
         return None, "List sums must be the same"
 
-    # This calculates the chi-squared value of the given data point
+    # Calculates the chi-squared value of all given data points
     chi_value = 0
     for i in range(4):
+        # Computes the chi squared of a specific qubit instance
         try:
             chi_value += (experimental_val[i] - theory_val[i]) ** 2 / theory_val[i]
+        # If there are expected values equal to zero, then divde by a really small
+        # number
         except ZeroDivisionError:
             chi_value += (experimental_val[i] - 0.00001) ** 2 / 0.00001
     return round(chi_value, 3)
@@ -76,6 +81,7 @@ def significance_statement(chi_value, significance=0.05):
     # Check to see if a given significant value is in the significant level list
     if invariant_boolean is True:
         relative_chi = significance_list[index]
+    # If not, approximate the level of significance linearly
     else:
         if lowest_significance < 0:
             relative_chi = (
@@ -94,4 +100,4 @@ def significance_statement(chi_value, significance=0.05):
     else:
         significance_string = "The results are statisically significant"
 
-    return round(chi_value, 3), significance_string
+    return significance_string

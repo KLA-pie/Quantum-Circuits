@@ -6,7 +6,7 @@ angle values, Random qubit values, etc).
 
 # Import statements(including qiskit methods)
 from random import choice, randrange
-from qiskit import QuantumCircuit, Aer, execute
+from qiskit import QuantumCircuit
 import numpy as np
 
 
@@ -83,8 +83,6 @@ def evaluate_circuit(random_gatelist):
         values for each gate represented within parentheses of each gate.
         circuit: A qiskit object that represents the actual quantum circuit with the randomly
         inputted values.
-        counts: A dictionary that maps each qubit instance (00,01,10,11) to the amount that
-        each occurs in the random circuit.
 
     """
     # Defined list to append each logic gate to
@@ -214,10 +212,5 @@ def evaluate_circuit(random_gatelist):
                 + str(qubit_select)
                 + ")"
             )
-    # Simulate random circuit
-    circuit.measure_all()
-    simulator = Aer.get_backend("qasm_simulator")
-    result = execute(circuit, simulator, shots=1024).result()
-    counts = result.get_counts(circuit)
-    # Return qubit_input_list, random qiskit circuit object, and counts
-    return qubit_input_list, circuit, counts
+    # Return qubit_input_list, random qiskit circuit object
+    return qubit_input_list, circuit

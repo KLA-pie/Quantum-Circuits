@@ -153,4 +153,4 @@ def test_significance(chi_val, sig_val, sig_statement):
         sig_statement: The actual statement of whether or not the data is statistically significant
     """
     test_sig_statement = significance_statement(chi_val, sig_val)
-    assert test_sig_statement[1] == sig_statement
+    assert test_sig_statement == sig_statement

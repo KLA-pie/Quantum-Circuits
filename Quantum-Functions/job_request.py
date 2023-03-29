@@ -2,10 +2,10 @@
 Function to call and record jobs to IBM's backend
 to run quantum simulations
 """
-from qiskit import IBMQ, QuantumCircuit, transpile
+from qiskit import IBMQ, execute, Aer
 
 
-def job_acquisition(gate_list):
+def job_acquisition(gate_list, quantum_circuit, iterations):
     """
     Takes a given random quantum circuit and sends four requests to
     run qubits through IBM's backend and records the simulation IDs
@@ -13,24 +13,34 @@ def job_acquisition(gate_list):
     Args:
         gate_list: A list of ordered quantum gate instructions that a quantum circuit
         must follow. Each gate has different properties when activated
+        quantum_circuit: An object that details how the constructed circuit will function
+        across the two qubits
+        iterations: The number of times to run the circuit on IBM's backend
 
     Returns:
-        The file `job_id_strings.txt` with each of the four new request IDs for every
-        simulation ran with a given circuit configuration.
+        The file `job_id_strings_(number).txt` with each of the four new request IDs for every
+        simulation ran with a given circuit configuration where (number) is the depth of the
+        circuit
     """
-    IBMQ.save_account(
-        "471ff4b5279157f806c481c0e638ccb8f3a91fb834aea4c4b6397f7525a5e663d13bb0411d32a1517bffe273d6ca7fd2d98c22c8b61c176547e13a874eb52f53"
-    )
+    # Load your IBM account onto your own compyter
+    IBMQ.save_account("<Insert your unique API token>")
     IBMQ.load_account()
-    provider = IBMQ.get_provider(hub="ibm-q", group="open", project="main")
-    backend = provider.get_backend("ibmq_lima")
-    quantum_circuit = QuantumCircuit(2)
-    for gate in gate_list:
-        eval("quantum_circuit" + gate)
-    quantum_circuit.measure_all()
-    with open("job_id_strings.txt", "w", encoding="utf8") as job_ids:
-        for i in range(4):
-            job = backend.run(transpile(quantum_circuit, backend=backend), shots=1024)
-            job_ids.write(job.job_id())
+
+    # Acesss the backend to use the quantum computer
+    backend = Aer.get_backend("qasm_simulator")
+
+    # Write to a new file with a given qubit depth
+    with open(
+        "job_id_strings_" + str(len(gate_list)) + ".txt", "w", encoding="utf8"
+    ) as job_ids:
+        # Record the circuit that is being tested as well as its arguments
+        job_ids.write(str(gate_list))
+        job_ids.write("\n")
+        # Execute and record the results for the number of iterations on the text file
+        while iterations != 0:
+            result = execute(quantum_circuit, backend, shots=1024).result()
+            counts = result.get_counts(quantum_circuit)
+            job_ids.write(str(counts))
             job_ids.write("\n")
+            iterations -= 1
     job_ids.close()
