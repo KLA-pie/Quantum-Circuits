@@ -24,7 +24,7 @@ This property of superposition allows quantum computers to perform certain compu
 
 Quantum computing is still an emerging technology, and currently, only a few applications have been developed, such as quantum cryptography and quantum simulations. However, researchers are exploring the potential of quantum computing in many fields, including drug discovery, cryptography, and machine learning.
 
-## Our Project and Quantum Error
+## Our Project and Quantum Error: How error prone is a two qubit quantum computer?
 
 IBM has an array of quantum computers and simulators(classical computers which essentially act like quantum computers), which have started exploring this incredibly new and untapped field. These computers are radically inventive, push the boundaries of quantum computing, and are easily accessible but can still be susceptible to Quantum error.
 
