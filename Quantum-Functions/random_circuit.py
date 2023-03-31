@@ -89,13 +89,13 @@ def evaluate_circuit(random_gatelist):
     qubit_input_list = []
     # Initalize a qiskit object to add random value to
     circuit = QuantumCircuit(2)
-    # Define random angle values and random qubit variables
-    theta = np.random.uniform(0, 2 * np.pi)
-    lam = np.random.uniform(0, 2 * np.pi)
-    phi = np.random.uniform(0, 2 * np.pi)
-    qubit_select = choice([0, 1])
     # Iterate through each random gate in the inputted random Quantum gate list
     for gate in random_gatelist:
+        # Define random angle values and random qubit variables
+        theta = np.random.uniform(0, 2 * np.pi)
+        lam = np.random.uniform(0, 2 * np.pi)
+        phi = np.random.uniform(0, 2 * np.pi)
+        qubit_select = choice([0, 1])
         # Input parameters for X gate and append to qubit_input_list
         if gate == ".x(":
             circuit.x(qubit_select)
@@ -213,4 +213,5 @@ def evaluate_circuit(random_gatelist):
                 + ")"
             )
     # Return qubit_input_list, random qiskit circuit object
+    circuit.measure_all()
     return qubit_input_list, circuit

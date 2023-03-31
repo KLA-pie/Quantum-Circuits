@@ -32,11 +32,11 @@ def chi_squared(theory_val, experimental_val):
     chi_value = 0
     for i in range(4):
         # Computes the chi squared of a specific qubit instance
-        try:
+        if theory_val[i] != 0:
             chi_value += (experimental_val[i] - theory_val[i]) ** 2 / theory_val[i]
         # If there are expected values equal to zero, then divde by a really small
         # number
-        except ZeroDivisionError:
+        else:
             chi_value += (experimental_val[i] - 0.00001) ** 2 / 0.00001
     return round(chi_value, 3)
 

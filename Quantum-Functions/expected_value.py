@@ -36,7 +36,7 @@ def statevector_output(gate_list):
         conjugate_value = np.conjugate(statevector[i])
         conjugate_statevector.append(conjugate_value)
         qubit_probabilities.append(
-            np.real(np.multiply(statevector[i], conjugate_statevector[i]))
+            float(np.real(np.multiply(statevector[i], conjugate_statevector[i])))
         )
 
     # Return all values
@@ -60,11 +60,11 @@ def gate_matrix(gate):
     # Initialize identity matrix for Kronecker product
     iden_matrix = np.array([[1, 0], [0, 1]])
 
-    # If the gate has at least one angle input, then generate a random
-    # angle value
+    # Checks to see if the gate requires angle inputs
     if "," in gate and ".cx(" not in gate and ".swap(" not in gate:
         return angled_gate_matrix(gate)
 
+    # Checks to see if the gate is one of the basic gates
     if ".x(" in gate or ".y(" in gate or ".z(" in gate or ".h(" in gate:
         transform_matrix = basic_gate_matrix(gate)
 
